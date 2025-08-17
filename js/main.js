@@ -1,53 +1,85 @@
-// Declaración de variables, constantes y arrays
-const productos = ["Yerba", "Azúcar", "Aceite"];
-const precios = [5000, 1200, 2500];
-let carrito = [];
-let total = 0;
+// Datos iniciales
+const productos = [
+  { id: 1, nombre: "Yerba", precio: 5000 },
+  { id: 2, nombre: "Azúcar", precio: 1200 },
+  { id: 3, nombre: "Aceite", precio: 2500 },
+];
 
-// Función para mostrar productos disponibles
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+// DOM Elements
+const listaProductos = document.getElementById("lista-productos");
+const listaCarrito = document.getElementById("lista-carrito");
+const totalHTML = document.getElementById("total");
+const vaciarBtn = document.getElementById("vaciar");
+
+// Mostrar productos disponibles
 function mostrarProductos() {
-  let mensaje = "Productos disponibles:\n";
-  for (let i = 0; i < productos.length; i++) {
-    mensaje += `${i + 1}. ${productos[i]} - $${precios[i]}\n`;
-  }
-  return mensaje;
+  listaProductos.innerHTML = "";
+  productos.forEach((p) => {
+    const div = document.createElement("div");
+    div.classList.add("card");
+    div.innerHTML = `
+      <h3>${p.nombre}</h3>
+      <p>$${p.precio}</p>
+      <button data-id="${p.id}">Agregar</button>
+    `;
+    listaProductos.appendChild(div);
+  });
 }
 
-// Función para simular compra
-function comprar() {
-  alert("¡Bienvenido al simulador de compras!");
+// Agregar al carrito
+function agregarAlCarrito(id) {
+  const producto = productos.find((p) => p.id === id);
+  const item = carrito.find((p) => p.id === id);
 
-  let continuar = true;
-
-  while (continuar) {
-    let opcion = prompt(
-      mostrarProductos() + "\nElige un número de producto (o 0 para salir):"
-    );
-
-    if (opcion === null || opcion === "0") {
-      continuar = false;
-    } else {
-      const index = parseInt(opcion) - 1;
-
-      if (index >= 0 && index < productos.length) {
-        carrito.push(productos[index]);
-        total += precios[index];
-        alert(`${productos[index]} agregado al carrito.`);
-      } else {
-        alert("Opción inválida, intentá de nuevo.");
-      }
-    }
-  }
-
-  if (carrito.length > 0) {
-    let resumen = `Compraste:\n${carrito.join(", ")}\nTotal: $${total}`;
-    alert(resumen);
-    console.log(resumen);
+  if (item) {
+    item.cantidad++;
   } else {
-    alert("No realizaste ninguna compra.");
-    console.log("Carrito vacío.");
+    carrito.push({ ...producto, cantidad: 1 });
   }
+
+  guardarCarrito();
+  mostrarCarrito();
 }
 
-// Iniciar simulador
-comprar();
+// Mostrar carrito
+function mostrarCarrito() {
+  listaCarrito.innerHTML = "";
+  let total = 0;
+
+  carrito.forEach((p) => {
+    total += p.precio * p.cantidad;
+    const div = document.createElement("div");
+    div.innerHTML = `
+      ${p.nombre} x${p.cantidad} = $${p.precio * p.cantidad}
+    `;
+    listaCarrito.appendChild(div);
+  });
+
+  totalHTML.textContent = `Total: $${total}`;
+}
+
+// Guardar en localStorage
+function guardarCarrito() {
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+}
+
+// Vaciar carrito
+vaciarBtn.addEventListener("click", () => {
+  carrito = [];
+  guardarCarrito();
+  mostrarCarrito();
+});
+
+// Delegación de eventos para botones de productos
+listaProductos.addEventListener("click", (e) => {
+  if (e.target.tagName === "BUTTON") {
+    const id = parseInt(e.target.dataset.id);
+    agregarAlCarrito(id);
+  }
+});
+
+// Inicializar
+mostrarProductos();
+mostrarCarrito();

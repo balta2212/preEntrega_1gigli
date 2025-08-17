@@ -3,11 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Simulador Interactivo</title>
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="./css/style.css" />
   </head>
   <body>
-    <h1>Simulador Interactivo</h1>
-    <p>Abre la consola del navegador para ver el funcionamiento.</p>
+    <header>
+      <h1>🛒 Simulador de Compras</h1>
+    </header>
+
+    <main>
+      <section id="productos">
+        <h2>Productos disponibles</h2>
+        <div id="lista-productos" class="grid"></div>
+      </section>
+
+      <section id="carrito">
+        <h2>Carrito</h2>
+        <div id="lista-carrito"></div>
+        <p id="total">Total: $0</p>
+        <button id="vaciar">Vaciar carrito</button>
+      </section>
+    </main>
+
     <script src="./js/main.js"></script>
   </body>
 </html>
