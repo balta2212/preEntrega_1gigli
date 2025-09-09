@@ -1,0 +1,8 @@
+[
+  { "id": 1, "nombre": "Yerba Mate 1kg", "precio": 5000 },
+  { "id": 2, "nombre": "Azúcar 1kg", "precio": 1200 },
+  { "id": 3, "nombre": "Aceite 900ml", "precio": 2500 },
+  { "id": 4, "nombre": "Fideos Spaghetti 500g", "precio": 1100 },
+  { "id": 5, "nombre": "Arroz 1kg", "precio": 1800 },
+  { "id": 6, "nombre": "Sal Fina 500g", "precio": 600 }
+]

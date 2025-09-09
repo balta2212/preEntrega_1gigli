@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Carrito de Compras</title>
     <link rel="stylesheet" href="./css/style.css" />
+    <!-- Toastify CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
   </head>
   <body>
     <header>
@@ -13,18 +18,35 @@
 
     <main>
       <section id="productos">
-        <h2>Productos disponibles</h2>
+        <div class="section-header">
+          <h2>Productos disponibles</h2>
+          <input
+            id="buscador"
+            type="search"
+            placeholder="Buscar productos..."
+          />
+        </div>
         <div id="lista-productos" class="grid"></div>
       </section>
 
       <section id="carrito">
         <h2>Carrito</h2>
-        <div id="lista-carrito"></div>
-        <p id="total">Total: $0</p>
-        <button id="vaciar">Vaciar carrito</button>
+        <div id="lista-carrito" class="carrito-items"></div>
+        <div class="carrito-footer">
+          <p id="total">Total: $0</p>
+          <div class="acciones">
+            <button id="vaciar" class="btn-danger">Vaciar carrito</button>
+            <button id="finalizar" class="btn-success">Finalizar compra</button>
+          </div>
+        </div>
       </section>
     </main>
 
+    <!-- Librerías externas -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <!-- App -->
     <script src="./js/main.js"></script>
   </body>
 </html>
